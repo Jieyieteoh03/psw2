@@ -5,9 +5,11 @@ import { useEditor } from "@tiptap/react";
 import { TimeInput } from "@mantine/dates";
 import { DatePickerInput } from "@mantine/dates";
 import { IconClock } from "@tabler/icons-react";
-import { Space } from "@mantine/core";
+import { Group, Space, Badge } from "@mantine/core";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
 import { notifications } from "@mantine/notifications";
 
 export default function BookingEdit() {
@@ -37,7 +39,7 @@ export default function BookingEdit() {
   }, []);
   const editor = useEditor(
     {
-      extensions: [StarterKit, Highlight],
+      extensions: [StarterKit, Underline, Highlight, TextAlign],
       content: booking.content,
       onUpdate: ({ editor }) => {
         setContent(editor.getHTML());
@@ -80,9 +82,14 @@ export default function BookingEdit() {
 
   return (
     <div className="container mx-auto my-5">
-      <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="d-flex justify-content-center align-items-center mb-5">
         <h1 className="h1">Edit Booking Room</h1>
       </div>
+      <div>
+        <h3>Room: {room}</h3>
+        <p className="text-muted">Meeting Room ID: {id}</p>
+      </div>
+
       <div className="card mb-2 p-4">
         <form
           onSubmit={(event) => {
@@ -90,20 +97,7 @@ export default function BookingEdit() {
             updateBooking();
           }}
         >
-          <div className="mb-3">
-            <label for="booking-title" className="form-label">
-              Room
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="booking-title"
-              value={room}
-              disabled
-              onChange={(event) => setRoom(event.target.value)}
-            />
-          </div>
-          <div className="mb-3">
+          <div className="mb-4">
             <label for="booking-content" className="form-label">
               Content of the Meeting
             </label>
@@ -149,54 +143,61 @@ export default function BookingEdit() {
               <RichTextEditor.Content />
             </RichTextEditor>
           </div>
-          <div style={{ display: "flex" }}>
-            <TimeInput
-              label="Start time"
-              icon={<IconClock size="1rem" stroke={1.5} />}
-              maw={400}
-              mx="end"
-              id="start-time"
-              value={startTime}
-              onChange={(event) => {
-                setStartTime(event.target.value);
-              }}
-            />
-            <Space w="xl" />
-            <TimeInput
-              label="End time"
-              icon={<IconClock size="1rem" stroke={1.5} />}
-              maw={400}
-              mx="end"
-              id="end-time"
-              value={endTime}
-              onChange={(event) => {
-                setEndTime(event.target.value);
-              }}
-            />
-          </div>
-          <div style={{ display: "flex" }}>
-            <DatePickerInput
-              value={date}
-              onChange={(newDate) => {
-                setDate(newDate);
-              }}
-              label="Date"
-              placeholder="Date"
-              maw={400}
-              mx="end"
-              w={115}
-            />
-          </div>
-          <div className="text-end">
-            <button type="submit" className="btn btn-primary">
-              Update
-            </button>
-          </div>
+          <Group position="apart">
+            <Group>
+              <TimeInput
+                label="Start time"
+                icon={<IconClock size="1rem" stroke={1.5} />}
+                maw={400}
+                mx="end"
+                id="start-time"
+                value={startTime}
+                onChange={(event) => {
+                  setStartTime(event.target.value);
+                }}
+              />
+              <Space w="xl">
+                <p>TO</p>
+              </Space>
+              <TimeInput
+                label="End time"
+                icon={<IconClock size="1rem" stroke={1.5} />}
+                maw={400}
+                mx="end"
+                id="end-time"
+                value={endTime}
+                onChange={(event) => {
+                  setEndTime(event.target.value);
+                }}
+              />
+              <Space w="xl" />
+              <DatePickerInput
+                value={date}
+                onChange={(newDate) => {
+                  setDate(newDate);
+                }}
+                label="Date"
+                placeholder="Date"
+                maw={400}
+                mx="end"
+                w={180}
+              />
+            </Group>
+            <div>
+              <button type="submit" className="btn btn-primary m-2">
+                Update
+              </button>
+            </div>
+          </Group>
         </form>
+        <Space h="10px" />
       </div>
+      <Space h="60px" />
       <div className="text-center">
-        <Link to="/room" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back
+        <Link to={`/booking_history`} className="btn btn-sm">
+          <Badge size="lg">
+            <i className="bi bi-arrow-left"></i> Back
+          </Badge>
         </Link>
       </div>
     </div>

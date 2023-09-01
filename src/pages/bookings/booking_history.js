@@ -1,3 +1,4 @@
+import { Space, Group, Badge } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,9 +18,10 @@ export default function BookingHistory() {
 
   return (
     <div className="container mx-auto my-5">
-      <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="d-flex justify-content-center align-items-center mb-2">
         <h1 className="h1">Manage Booking Rooms</h1>
       </div>
+      <Space h="30px" />
       <div className="card mb-2 p-4">
         <table className="table">
           <thead>
@@ -43,10 +45,10 @@ export default function BookingHistory() {
                         <span className="">{booking.date.slice(0, 10)}</span>
                       </td>
                       <td>
-                        <span className="">{booking.startTime}</span>
+                        <span className=""> {booking.startTime}</span>
                       </td>
                       <td>
-                        <span className="">{booking.endTime}</span>
+                        <span className=""> {booking.endTime}</span>
                       </td>
                       <td className="text-end">
                         <div className="buttons">
@@ -73,15 +75,14 @@ export default function BookingHistory() {
           </tbody>
         </table>
       </div>
-      <div className="text-center">
-        <Link
-          to="/dashboard
-        "
-          className="btn btn-link btn-sm"
-        >
-          <i className="bi bi-arrow-left"></i> Back to Dashboard
+      <Space h="100px" />
+      <Group position="center">
+        <Link to="/dashboard">
+          <Badge color="indigo" size="lg">
+            <i className="bi bi-arrow-left"></i> <></>Back to Dashboard
+          </Badge>
         </Link>
-      </div>
+      </Group>
     </div>
   );
 }

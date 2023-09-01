@@ -4,7 +4,10 @@ import { RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
 import { notifications } from "@mantine/notifications";
+import { Space, Group, Badge } from "@mantine/core";
 
 export default function EditRoom() {
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ export default function EditRoom() {
   }, []);
   const editor = useEditor(
     {
-      extensions: [StarterKit, Highlight],
+      extensions: [StarterKit, Underline, Highlight, TextAlign],
       content: post.content,
       onUpdate: ({ editor }) => {
         setContent(editor.getHTML());
@@ -153,11 +156,14 @@ export default function EditRoom() {
           </div>
         </form>
       </div>
-      <div className="text-center">
-        <Link to="/dashboard" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back to Dashboard
+      <Space h="100px" />
+      <Group position="center">
+        <Link to="/room">
+          <Badge color="indigo" size="lg">
+            <i className="bi bi-arrow-left"></i> <></>Back
+          </Badge>
         </Link>
-      </div>
+      </Group>
     </div>
   );
 }

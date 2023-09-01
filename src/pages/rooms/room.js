@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Space, Group, Badge } from "@mantine/core";
 
 export default function Room() {
   const [posts, setPosts] = useState([]);
@@ -17,14 +18,16 @@ export default function Room() {
 
   return (
     <div className="container mx-auto my-5">
-      <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="d-flex justify-content-center align-items-center mb-2">
         <h1 className="h1">Manage Meeting Rooms</h1>
-        <div className="text-end">
-          <Link to="/add_room" className="btn btn-primary btn-sm">
-            Add New Room
-          </Link>
-        </div>
       </div>
+      <Space h="50px" />
+      <div className="text-end">
+        <Link to="/add_room" className="btn btn-primary btn-sm">
+          Add Room
+        </Link>
+      </div>
+      <Space h="20px" />
       <div className="card mb-2 p-4">
         <table className="table">
           <thead>
@@ -70,11 +73,14 @@ export default function Room() {
           </tbody>
         </table>
       </div>
-      <div className="text-center">
-        <Link to="/dashboard" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back to Dashboard
+      <Space h="100px" />
+      <Group position="center">
+        <Link to="/dashboard">
+          <Badge color="indigo" size="lg">
+            <i className="bi bi-arrow-left"></i> <></>Back to Dashboard
+          </Badge>
         </Link>
-      </div>
+      </Group>
     </div>
   );
 }

@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RichTextEditor, Link as EditorLink } from "@mantine/tiptap";
+import { Space, Group, Badge } from "@mantine/core";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
 import { notifications } from "@mantine/notifications";
 
 export default function AddRoom() {
@@ -12,7 +15,7 @@ export default function AddRoom() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const editor = useEditor({
-    extensions: [StarterKit, EditorLink, Highlight],
+    extensions: [StarterKit, Underline, EditorLink, Highlight, TextAlign],
     content: content,
     onUpdate: ({ editor }) => {
       setContent(editor.getHTML());
@@ -37,7 +40,7 @@ export default function AddRoom() {
         message: "Thank You!",
         color: "green",
       });
-      navigate("/");
+      navigate("/room");
     } else {
       notifications.show({
         title: "Please enter field",
@@ -59,9 +62,9 @@ export default function AddRoom() {
               submitForm();
             }}
           >
-            <div className="mb-3">
+            <div className="mb-4">
               <label for="post-title" className="form-label">
-                Title
+                Room Title
               </label>
               <input
                 type="text"
@@ -127,11 +130,14 @@ export default function AddRoom() {
             </div>
           </form>
         </div>
-        <div className="text-center">
-          <Link to="/dashboard" className="btn btn-link btn-sm">
-            <i className="bi bi-arrow-left"></i> Back to Dashboard
+        <Space h="100px" />
+        <Group position="center">
+          <Link to="/room">
+            <Badge color="indigo" size="lg">
+              <i className="bi bi-arrow-left"></i> <></>Back
+            </Badge>
           </Link>
-        </div>
+        </Group>
       </div>
     </div>
   );

@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
+import { Space, Group, Badge } from "@mantine/core";
 
 export default function Dashboard() {
   return (
-    <div className="container mx-auto my-5" style={{ maxwidth: "800px" }}>
-      <h1 className="h1 mb-4 text-center">Dashboard</h1>
-      <div className="row">
-        <div className="col">
+    <div className="container mx-auto my-5" style={{ maxwidth: "600px" }}>
+      <h1 className="h1 mb-4 text-center">
+        <em>Dashboard</em>
+      </h1>
+      <Space h="50px" />
+      <Group position="center">
+        <div className="col-6">
           <div className="card mb-2">
             <div className="card-body">
               <h5 className="card-title text-center">
@@ -28,7 +32,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="col">
+        <div className="col-6 ">
           <div className="card mb-2">
             <div className="card-body">
               <h5 className="card-title text-center">
@@ -44,13 +48,16 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="mt-4 text-center">
-        <Link to="/" className="btn btn-outline-dark btn-sm">
-          <i className="bi bi-arrow-left"></i> Back
+        </div>{" "}
+      </Group>
+      <Space h="130px" />
+      <Group position="center">
+        <Link to="/">
+          <Badge color="pink" size="lg">
+            <i className="bi bi-arrow-left"></i> <></>Back to Home
+          </Badge>
         </Link>
-      </div>
+      </Group>
     </div>
   );
 }

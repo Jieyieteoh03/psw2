@@ -4,11 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TimeInput } from "@mantine/dates";
 import { DatePickerInput } from "@mantine/dates";
 import { IconClock } from "@tabler/icons-react";
-import { Space } from "@mantine/core";
+import { Badge, Group, Space } from "@mantine/core";
 import { RichTextEditor, Link as EditorLink } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
 import { notifications } from "@mantine/notifications";
 
 export default function BookingAdd() {
@@ -33,7 +35,7 @@ export default function BookingAdd() {
   }, []);
 
   const editor = useEditor({
-    extensions: [StarterKit, EditorLink, Highlight],
+    extensions: [StarterKit, Underline, EditorLink, Highlight, TextAlign],
     content: content,
     onUpdate: ({ editor }) => {
       setContent(editor.getHTML());
@@ -64,7 +66,7 @@ export default function BookingAdd() {
       navigate("/booking_history");
     } else {
       notifications.show({
-        title: "Please enter field",
+        title: "Please enter your booking information",
         color: "red",
       });
     }
@@ -73,32 +75,21 @@ export default function BookingAdd() {
   return (
     <div>
       <div className="container mx-auto my-5">
-        <div className="d-flex justify-content-between align-items-center mb-2">
+        <div className="d-flex justify-content-center align-items-center mb-2">
           <h1 className="h1">Booking Meeting Room</h1>
         </div>
-        <div className="card mb-2 p-4">
+        <div className="mt-5 mb-2">
+          <h3>Room: {title}</h3>
+          <p className="text-muted">Meeting Room ID: {id}</p>
+        </div>
+        <div className="card mb-5 p-4">
           <form
             onSubmit={(event) => {
               event.preventDefault();
               submitForm();
             }}
           >
-            <div className="mb-3">
-              <label for="post-content" className="form-label">
-                Room
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="post-room"
-                value={title}
-                onChange={(event) => {
-                  setRoom(event.target.value);
-                }}
-                disabled
-              />
-            </div>
-            <div className="mb-3">
+            <div className="mb-4">
               <label for="post-content" className="form-label">
                 Content of the Meeting
               </label>
@@ -140,58 +131,63 @@ export default function BookingAdd() {
                     <RichTextEditor.AlignRight />
                   </RichTextEditor.ControlsGroup>
                 </RichTextEditor.Toolbar>
-
                 <RichTextEditor.Content />
               </RichTextEditor>
             </div>
-            <div style={{ display: "flex" }}>
-              <TimeInput
-                label="Start time"
-                icon={<IconClock size="1rem" stroke={1.5} />}
-                maw={400}
-                mx="end"
-                id="start-time"
-                value={startTime}
-                onChange={(event) => {
-                  setStartTime(event.target.value);
-                }}
-              />
-              <Space w="xl" />
-              <TimeInput
-                label="End time"
-                icon={<IconClock size="1rem" stroke={1.5} />}
-                maw={400}
-                mx="end"
-                id="end-time"
-                value={endTime}
-                onChange={(event) => {
-                  setEndTime(event.target.value);
-                }}
-              />
-            </div>
-            <div style={{ display: "flex" }}>
-              <DatePickerInput
-                value={date}
-                onChange={(newDate) => {
-                  setDate(newDate);
-                }}
-                label="Date"
-                placeholder="Date"
-                maw={400}
-                mx="end"
-                w={115}
-              />
-            </div>
-            <div className="text-end">
-              <button type="submit" className="btn btn-primary">
-                Add
-              </button>
-            </div>
+            <Group position="apart">
+              <Group>
+                <TimeInput
+                  label="Start time"
+                  icon={<IconClock size="1rem" stroke={1.5} />}
+                  maw={400}
+                  mx="end"
+                  id="start-time"
+                  value={startTime}
+                  onChange={(event) => {
+                    setStartTime(event.target.value);
+                  }}
+                />{" "}
+                <Space w="xl">
+                  <p>TO</p>
+                </Space>
+                <TimeInput
+                  label="End time"
+                  icon={<IconClock size="1rem" stroke={1.5} />}
+                  maw={400}
+                  mx="end"
+                  id="end-time"
+                  value={endTime}
+                  onChange={(event) => {
+                    setEndTime(event.target.value);
+                  }}
+                />
+                <Space w="xl" />
+                <DatePickerInput
+                  value={date}
+                  onChange={(newDate) => {
+                    setDate(newDate);
+                  }}
+                  label="Date"
+                  placeholder="Pick a Date?"
+                  maw={400}
+                  mx="end"
+                  w={180}
+                />
+              </Group>
+              <div>
+                <button type="submit" className="btn btn-primary m-2">
+                  Add
+                </button>
+              </div>
+            </Group>
           </form>
         </div>
+        <Space h="60px" />
         <div className="text-center">
-          <Link to="/room" className="btn btn-link btn-sm">
-            <i className="bi bi-arrow-left"></i> Back
+          <Link to={`/`} className="btn btn-sm">
+            <Badge size="lg">
+              <i className="bi bi-arrow-left"></i> Back
+            </Badge>
           </Link>
         </div>
       </div>

@@ -1,6 +1,9 @@
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { Button } from "@mantine/core";
+import { Badge, Button, Divider, Group, Space, Title } from "@mantine/core";
+import { BsTrashFill } from "react-icons/bs";
+import { AiOutlineFileAdd } from "react-icons/ai";
+import { Container } from "react-bootstrap";
 
 export default function Room_checked() {
   const { id } = useParams();
@@ -18,23 +21,35 @@ export default function Room_checked() {
   const { title = "", content = "", status } = post;
 
   return (
-    <div className="container mx-auto my-5">
-      <div className="card rounded shadow-sm m-5">
-        <div className="card-body">
-          <Button
-            component={Link}
-            to={`/booking/${post.id}`}
-            className="btn btn-link btn-sm"
-          >
-            <i className="bi bi-arrow-left"></i> Booking Room
-          </Button>
-          <h3 className="card-title mb-3">{title}</h3>
-          <p>Meeting Room ID: {id}</p>
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-          <ul className="list-group">
+    <div className="container mx-auto my-4">
+      <Group position="apart">
+        <Button component={Link} to={`/`} className="btn">
+          <Badge color="cyan" size="lg">
+            <i className="bi bi-arrow-left" /> Home
+          </Badge>
+        </Button>
+
+        <Button component={Link} to={`/booking/${post.id}`} className="btn">
+          <Badge color="cyan" size="lg">
+            Add Booking Details <i className="bi bi-arrow-right" />
+          </Badge>
+        </Button>
+      </Group>
+      <Space h="40px" />
+
+      <div className="card-body">
+        <h1 className="card-title text-center">{title}</h1>
+        <p className=" text-muted text-center">Meeting Room ID: {id}</p>
+        <div className="card rounded shadow-md">
+          <strong className="pt-3 ps-3">Meeting Content:</strong>
+          <div
+            className="ps-5 pt-3 pb-3"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />{" "}
+          <ul className="">
             {list.map((item, index) => (
               <li
-                className="list-group-item d-flex justify-content-between align-items-center"
+                className=" d-flex justify-content-between align-items-center"
                 key={index}
               >
                 <div>
@@ -76,54 +91,51 @@ export default function Room_checked() {
                   )}
                 </div>
                 <button
-                  className="btn btn-danger"
+                  className="btn pe-3"
                   onClick={() => {
                     const newInput = list.filter((num) => num.id !== item.id);
                     setList(newInput);
                   }}
                 >
-                  Delete
+                  <Badge color="red" size="xl">
+                    <BsTrashFill />
+                  </Badge>
                 </button>
               </li>
             ))}
-            <div className="mt-4">
-              <form
-                className="d-flex justify-content-between align-items-center"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  const newList = [...list];
-                  newList.push({
-                    id: Math.random(),
-                    text: input,
-                    isCompleted: false,
-                  });
-                  setList(newList);
-                  setInput("");
-                }}
-              >
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Add new content..."
-                  value={input}
-                  onChange={(event) => {
-                    setInput(event.target.value);
-                  }}
-                />
-                <button className="btn btn-primary btn-sm rounded ms-2">
-                  Add
-                </button>
-              </form>
-            </div>
           </ul>
         </div>
       </div>
-
-      <div className="text-center mt-3">
-        <Link to="/" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Home
-        </Link>
-      </div>
+      <Container className="mt-5">
+        <form
+          className="d-flex justify-content-between align-items-center"
+          onSubmit={(event) => {
+            event.preventDefault();
+            const newList = [...list];
+            newList.push({
+              id: Math.random(),
+              text: input,
+              isCompleted: false,
+            });
+            setList(newList);
+            setInput("");
+          }}
+        >
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Add new content..."
+            value={input}
+            onChange={(event) => {
+              setInput(event.target.value);
+            }}
+          />
+          <button className="btn rounded">
+            {" "}
+            <Badge size="xl">Add</Badge>
+          </button>
+        </form>
+      </Container>
     </div>
   );
 }
